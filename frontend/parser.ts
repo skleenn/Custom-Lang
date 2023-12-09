@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { Stmt, Program, Expr, BinaryExpr, NumericLiteral, Identifier, NullLiteral } from "./ast.ts";
+import { Stmt, Program, Expr, BinaryExpr, NumericLiteral, Identifier } from "./ast.ts";
 import { tokenize, Token, TokenType } from "./lexer.ts";
 
 export default class Parser{
@@ -82,15 +82,15 @@ export default class Parser{
         switch (tk){
             case TokenType.Identifier:
                 return { kind: "Identifier", symbol: this.eat().value } as Identifier;
-            case TokenType.Null:
-                this.eat();
-                return { kind: "NullLiteral", value: "null" } as NullLiteral;
+            //case TokenType.Null:
+                //this.eat();
+                //return { kind: "NullLiteral", value: "null" } as NullLiteral;
             case TokenType.Number:
                 return { kind: "NumericLiteral", value: parseFloat(this.eat().value) } as NumericLiteral;
             case TokenType.OpenParen: {
                 this.eat();
                 const value = this.parse_expr();
-                this.eat();
+                this.expect(TokenType.CloseParen, "Unexpected token found inside pranthesized expression.",);
                 return value;
             }
             default:

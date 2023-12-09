@@ -1,6 +1,6 @@
 
 export enum TokenType{
-    Null,
+    //Null,
     Number,
     Identifier,
     Equals,
@@ -12,7 +12,7 @@ export enum TokenType{
 
 const KEYWORDS: Record<string, TokenType> = {
     let: TokenType.Let,
-    null: TokenType.Null,
+    //null: TokenType.Null,
 }
 
 export interface Token{
@@ -29,7 +29,7 @@ function isalpha(src: string){
 }
 
 function isskippable(str: string){
-    return str == ' ' || str == '\n' || str == '\t';
+    return str == " " || str == "\n" || str == "\t";
 }
 
 function isint(str: string){
@@ -43,13 +43,13 @@ export function tokenize(sourceCode: string): Token[] {
     const src = sourceCode.split("");
 
     while (src.length > 0){
-        if (src[0] == '('){
+        if (src[0] == "("){
             tokens.push(token(src.shift(), TokenType.OpenParen));
-        } else if (src[0] == ')'){
+        } else if (src[0] == ")"){
             tokens.push(token(src.shift(), TokenType.CloseParen));
-        } else if (src[0] == '+' || src[0] == "-" || src[0] == '*' || src[0] == "/" || src[0] == "%"){
+        } else if (src[0] == "+" || src[0] == "-" || src[0] == "*" || src[0] == "/" || src[0] == "%"){
             tokens.push(token(src.shift(), TokenType.BinaryOperator));
-        } else if (src[0] == '='){
+        } else if (src[0] == "="){
             tokens.push(token(src.shift(), TokenType.Equals));
         } else {
             // multi-character tokens
@@ -67,9 +67,9 @@ export function tokenize(sourceCode: string): Token[] {
                 }
                 const reserved = KEYWORDS[ident];
                 if (typeof reserved == "number"){
-                    tokens.push(token(ident, TokenType.Identifier));
-                } else{
                     tokens.push(token(ident, reserved));
+                } else{
+                    tokens.push(token(ident, TokenType.Identifier));
                 }
             } else if (isskippable(src[0])){
                 src.shift(); 
