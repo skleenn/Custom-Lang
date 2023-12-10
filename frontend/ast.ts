@@ -1,8 +1,8 @@
 export type NodeType = 
     | "Program" 
     | "NumericLiteral" 
-    //| "NullLiteral"
     | "Identifier" 
+    | "VarDeclaration"
     | "BinaryExpr";
 
 export interface Stmt{
@@ -12,6 +12,13 @@ export interface Stmt{
 export interface Program extends Stmt{
     kind: "Program";
     body: Stmt[];
+}
+
+export interface VarDeclaration extends Stmt{
+    kind: "VarDeclaration";
+    constant: boolean,
+    identifier: string,
+    value?: Expr;
 }
 
 // deno-lint-ignore no-empty-interface

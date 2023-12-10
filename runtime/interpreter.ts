@@ -1,5 +1,5 @@
 import { MK_NULL, NumberVal, RuntimeVal } from "./values.ts";
-import {NumericLiteral, Stmt, BinaryExpr, Program, Identifier} from "../frontend/ast.ts";
+import {NumericLiteral, Stmt, BinaryExpr, Program, Identifier, VarDeclaration} from "../frontend/ast.ts";
 import  Environment  from "./environment.ts";
 
 function eval_program(program: Program, env: Environment): RuntimeVal{
@@ -58,10 +58,14 @@ export function evaluate(astNode: Stmt, env: Environment): RuntimeVal{
             return eval_binary_expr(astNode as BinaryExpr, env);
         case "Program":
             return eval_program(astNode as Program, env);
+        case "VarDeclaration":
+            return eval_var_declaration(astNode as VarDeclaration, env);
         default:
             console.error("this AST node has not yet been set up for interpretation", astNode,);
-            Deno.exit(0);
+            Deno.exit(0);   
+    }
 
-            
+    function eval_var_declaration(arg0: VarDeclaration,env: Environment,): RuntimeVal{
+        throw new Error("Function not implemented.");
     }
 }
