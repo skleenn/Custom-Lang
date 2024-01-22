@@ -3,6 +3,9 @@ export type NodeType =
     | "NumericLiteral" 
     | "Identifier" 
     | "VarDeclaration"
+    | "Property"
+    | "ObjectLiteral"
+    | "AssignmentExpr"
     | "BinaryExpr";
 
 export interface Stmt{
@@ -24,6 +27,12 @@ export interface VarDeclaration extends Stmt{
 // deno-lint-ignore no-empty-interface
 export interface Expr extends Stmt{}
 
+export interface AssignmentExpr extends Expr {
+    kind: "AssignmentExpr";
+    assigne: Expr;
+    value: Expr;
+}
+
 export interface BinaryExpr extends Expr{
     kind: "BinaryExpr";
     left: Expr;
@@ -41,9 +50,17 @@ export interface NumericLiteral extends Expr{
     value: number;
 }
 
-//export interface NullLiteral extends Expr{
-   // kind: "NullLiteral";
-   // value: "null";
-//}
+export interface Property extends Expr{
+    kind: "Property";
+    key: string;
+    value? : Expr;
+}
+
+export interface ObjectLiteral extends Expr{
+    kind: "ObjectLiteral";
+    properties: Property[]
+}
+
+
 
 
